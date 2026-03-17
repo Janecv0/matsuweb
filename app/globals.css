@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #111111;
+  --color-paper: #f4f0eb;
+  --color-warm: #e8dfd3;
+  --color-ember: #d5791c;
+  --color-bronze: #8c5a24;
+  --color-muted: #5f5a54;
+}
+
+* {
+  border-color: rgb(0 0 0 / 0.08);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-source-sans), sans-serif;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  background-image: radial-gradient(circle at 5% 10%, rgb(255 255 255 / 0.9), transparent 30%),
+    radial-gradient(circle at 95% 0%, rgb(220 186 150 / 0.22), transparent 28%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-noto-serif), serif;
+  letter-spacing: 0.012em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.section-shell {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10;
+}
+
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember/60 focus-visible:ring-offset-2 focus-visible:ring-offset-paper;
+}
+
+.surface {
+  @apply rounded-2xl border border-black/10 bg-white/85 shadow-card backdrop-blur;
+}
+
+.prose-content p {
+  @apply mb-4 leading-7 text-muted;
+}
+
+.prose-content h2 {
+  @apply mb-4 mt-8 text-2xl;
+}
+
+.prose-content h3 {
+  @apply mb-2 mt-6 text-xl;
+}
+
+.prose-content ul {
+  @apply mb-4 list-disc space-y-2 pl-6 text-muted;
+}
+
+.prose-content ol {
+  @apply mb-4 list-decimal space-y-2 pl-6 text-muted;
+}
