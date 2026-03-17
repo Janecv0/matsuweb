@@ -9,6 +9,8 @@
   --color-ember: #d5791c;
   --color-bronze: #8c5a24;
   --color-muted: #5f5a54;
+  --font-noto-serif: "Noto Serif", "Times New Roman", serif;
+  --font-source-sans: "Source Sans 3", "Segoe UI", "Trebuchet MS", sans-serif;
 }
 
 * {
@@ -55,7 +57,7 @@ img {
 }
 
 .focus-ring {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember/60 focus-visible:ring-offset-2 focus-visible:ring-offset-paper;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 focus-visible:ring-offset-paper;
 }
 
 .surface {

@@ -6,17 +6,6 @@ interface AnnouncementStripProps {
   announcement: Announcement;
 }
 
-function iconByName(name: string | null) {
-  switch (name) {
-    case "triangle-alert":
-      return AlertTriangle;
-    case "bell":
-      return Bell;
-    default:
-      return Megaphone;
-  }
-}
-
 function variantClass(variant: Announcement["variant"]) {
   switch (variant) {
     case "alert":
@@ -33,12 +22,16 @@ export function AnnouncementStrip({ announcement }: AnnouncementStripProps) {
     return null;
   }
 
-  const Icon = iconByName(announcement.icon_name);
-
   return (
     <div className={cn("w-full border-b border-black/20", variantClass(announcement.variant))}>
       <div className="section-shell flex min-h-10 items-center justify-center gap-2 py-1 text-center text-sm font-medium tracking-wide">
-        <Icon className="h-4 w-4" aria-hidden="true" />
+        {announcement.icon_name === "triangle-alert" ? (
+          <AlertTriangle className="h-4 w-4" aria-hidden="true" />
+        ) : announcement.icon_name === "bell" ? (
+          <Bell className="h-4 w-4" aria-hidden="true" />
+        ) : (
+          <Megaphone className="h-4 w-4" aria-hidden="true" />
+        )}
         <span>{announcement.text}</span>
       </div>
     </div>
