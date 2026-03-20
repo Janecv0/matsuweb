@@ -32,25 +32,45 @@ values
   ('en', 'Karate Klub Matsu', 'Traditional karate for children, students and adults.', 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1800&q=80', 'Start Here', '/en/start-here', 'For Students', '/en/for-students', 1, true),
   ('en', 'A practice with meaning', 'We develop body, mind and character through steady training.', 'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1800&q=80', 'Visit a training', '/en/contact', 'About', '/en/about', 2, true);
 
-insert into public.value_cards (locale, card_key, title, excerpt, image_url, href, order_index)
+insert into public.value_cards (
+  locale,
+  card_key,
+  title,
+  excerpt,
+  hover_text,
+  image_url,
+  href,
+  action_type,
+  modal_title,
+  modal_body,
+  modal_image_url,
+  modal_image_url_secondary,
+  order_index
+)
 values
-  ('cs', 'meaning', 'Smysl', 'Karate jako dlouhodobá cesta, ne rychlý efekt.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/cs/o-nas', 1),
-  ('cs', 'tradition', 'Tradice', 'Respekt, etiketa dojo a poctivá technika.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/cs/o-nas#history', 2),
-  ('cs', 'selfdefense', 'Sebeobrana', 'Praktické návyky pro bezpečný život.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 3),
-  ('cs', 'practice', 'Praxe', 'Pravidelnost, koncentrace a kvalitní vedení.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 4),
-  ('cs', 'community', 'My', 'Přátelský klub pro děti i dospělé.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/cs/o-nas#club', 5),
-  ('cs', 'start', 'Začít', 'Bez obav. Přijďte si vyzkoušet první trénink.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 6),
-  ('en', 'meaning', 'Meaning', 'Karate as a long-term path.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/en/about', 1),
-  ('en', 'tradition', 'Tradition', 'Respect, dojo etiquette and fundamentals.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/en/about#history', 2),
-  ('en', 'selfdefense', 'Self-defense', 'Practical habits for confidence.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/en/start-here', 3),
-  ('en', 'practice', 'Practice', 'Consistency, focus and quality coaching.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/en/start-here', 4),
-  ('en', 'community', 'Community', 'A welcoming club for families.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/en/about#club', 5),
-  ('en', 'start', 'Start', 'Join your first training with confidence.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/en/start-here', 6)
+  ('cs', 'meaning', 'Smysl', 'Karate jako dlouhodobá cesta, ne rychlý efekt.', 'Disciplína, respekt a klid mysli rostou krok za krokem.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/cs/o-nas', 'modal', 'Smysl - detail', 'TODO: Doplňte detailní text k této kartě. Můžete přidat příběh, přístup trenérů, konkrétní přínosy i praktické ukázky z tréninku.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1200&q=80', 1),
+  ('cs', 'tradition', 'Tradice', 'Respekt, etiketa dojo a poctivá technika.', 'Navazujeme na dojo kulturu a ověřený způsob výuky.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/cs/o-nas#history', 'modal', 'Tradice - detail', 'TODO: Doplňte detailní text k této kartě. Můžete přidat příběh, přístup trenérů, konkrétní přínosy i praktické ukázky z tréninku.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1200&q=80', 2),
+  ('cs', 'selfdefense', 'Sebeobrana', 'Praktické návyky pro bezpečný život.', 'Budujeme jistotu, vnímání situace i zdravé sebevědomí.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 'modal', 'Sebeobrana - detail', 'TODO: Doplňte detailní text k této kartě. Můžete přidat příběh, přístup trenérů, konkrétní přínosy i praktické ukázky z tréninku.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1200&q=80', 3),
+  ('cs', 'practice', 'Praxe', 'Pravidelnost, koncentrace a kvalitní vedení.', 'Trénujeme s jasnou strukturou a průběžnou zpětnou vazbou.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 'modal', 'Praxe - detail', 'TODO: Doplňte detailní text k této kartě. Můžete přidat příběh, přístup trenérů, konkrétní přínosy i praktické ukázky z tréninku.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1200&q=80', 4),
+  ('cs', 'community', 'My', 'Přátelský klub pro děti i dospělé.', null, 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/cs/o-nas#club', 'link', null, null, null, null, 5),
+  ('cs', 'start', 'Začít', 'Bez obav. Přijďte si vyzkoušet první trénink.', null, 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 'link', null, null, null, null, 6),
+  ('en', 'meaning', 'Meaning', 'Karate as a long-term path.', 'Discipline, respect and calm focus are built over time.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/en/about', 'modal', 'Meaning - detail', 'TODO: Add detailed content for this card. You can include coaching approach, real training examples and practical outcomes.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1200&q=80', 1),
+  ('en', 'tradition', 'Tradition', 'Respect, dojo etiquette and fundamentals.', 'Our training follows proven principles with modern clarity.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/en/about#history', 'modal', 'Tradition - detail', 'TODO: Add detailed content for this card. You can include coaching approach, real training examples and practical outcomes.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1200&q=80', 2),
+  ('en', 'selfdefense', 'Self-defense', 'Practical habits for confidence.', 'We build situational awareness and steady decision-making.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/en/start-here', 'modal', 'Self-defense - detail', 'TODO: Add detailed content for this card. You can include coaching approach, real training examples and practical outcomes.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1200&q=80', 3),
+  ('en', 'practice', 'Practice', 'Consistency, focus and quality coaching.', 'Every class has structure, progression and clear feedback.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/en/start-here', 'modal', 'Practice - detail', 'TODO: Add detailed content for this card. You can include coaching approach, real training examples and practical outcomes.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1200&q=80', 4),
+  ('en', 'community', 'Community', 'A welcoming club for families.', null, 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/en/about#club', 'link', null, null, null, null, 5),
+  ('en', 'start', 'Start', 'Join your first training with confidence.', null, 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/en/start-here', 'link', null, null, null, null, 6)
 on conflict (locale, card_key) do update set
   title = excluded.title,
   excerpt = excluded.excerpt,
+  hover_text = excluded.hover_text,
   image_url = excluded.image_url,
   href = excluded.href,
+  action_type = excluded.action_type,
+  modal_title = excluded.modal_title,
+  modal_body = excluded.modal_body,
+  modal_image_url = excluded.modal_image_url,
+  modal_image_url_secondary = excluded.modal_image_url_secondary,
   order_index = excluded.order_index;
 
 insert into public.pages (locale, page_key, title, subtitle, intro, body_markdown, seo_title, seo_description, is_member_only)

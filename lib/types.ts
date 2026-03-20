@@ -57,8 +57,14 @@ export interface ValueCard {
   card_key: string;
   title: string;
   excerpt: string;
+  hover_text: string | null;
   image_url: string;
-  href: string;
+  href: string | null;
+  action_type: "link" | "modal";
+  modal_title: string | null;
+  modal_body: string | null;
+  modal_image_url: string | null;
+  modal_image_url_secondary: string | null;
   order_index: number;
 }
 

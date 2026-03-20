@@ -210,42 +210,108 @@ function heroSlides(locale: Locale): HeroSlide[] {
 
 function valueCards(locale: Locale): ValueCard[] {
   const cardsCs = [
-    ["meaning", "Smysl", "Karate jako dlouhodobá cesta, ne rychlý efekt.", photo.card1],
-    ["tradition", "Tradice", "Respekt k učitelům, etiketa dojo a poctivá technika.", photo.card2],
-    ["selfdefense", "Sebeobrana", "Praktické návyky pro bezpečný a klidný život.", photo.card3],
-    ["practice", "Praxe", "Pravidelnost, koncentrace a kvalitní vedení tréninku.", photo.card1],
-    ["community", "My", "Přátelský klub pro děti, rodiče, studenty i dospělé.", photo.card2],
-    ["start", "Začít", "Bez obav. Přijďte si vyzkoušet první trénink.", photo.card3]
+    [
+      "meaning",
+      "Smysl",
+      "Karate jako dlouhodobá cesta, ne rychlý efekt.",
+      "Disciplína, respekt a klid mysli rostou krok za krokem.",
+      photo.card1
+    ],
+    [
+      "tradition",
+      "Tradice",
+      "Respekt k učitelům, etiketa dojo a poctivá technika.",
+      "Navazujeme na dojo kulturu a ověřený způsob výuky.",
+      photo.card2
+    ],
+    [
+      "selfdefense",
+      "Sebeobrana",
+      "Praktické návyky pro bezpečný a klidný život.",
+      "Budujeme jistotu, vnímání situace i zdravé sebevědomí.",
+      photo.card3
+    ],
+    [
+      "practice",
+      "Praxe",
+      "Pravidelnost, koncentrace a kvalitní vedení tréninku.",
+      "Trénujeme s jasnou strukturou a průběžnou zpětnou vazbou.",
+      photo.card1
+    ],
+    ["community", "My", "Přátelský klub pro děti, rodiče, studenty i dospělé.", null, photo.card2],
+    ["start", "Začít", "Bez obav. Přijďte si vyzkoušet první trénink.", null, photo.card3]
   ] as const;
 
   const cardsEn = [
-    ["meaning", "Meaning", "Karate as a long-term path, not a quick shortcut.", photo.card1],
-    ["tradition", "Tradition", "Respect, dojo etiquette and solid fundamentals.", photo.card2],
-    ["selfdefense", "Self-defense", "Practical habits for confidence and safety.", photo.card3],
-    ["practice", "Practice", "Consistency, focus and high-quality coaching.", photo.card1],
-    ["community", "Community", "A welcoming club for children and adults alike.", photo.card2],
-    ["start", "Start", "Join your first training with confidence.", photo.card3]
+    [
+      "meaning",
+      "Meaning",
+      "Karate as a long-term path, not a quick shortcut.",
+      "Discipline, respect and calm focus are built over time.",
+      photo.card1
+    ],
+    [
+      "tradition",
+      "Tradition",
+      "Respect, dojo etiquette and solid fundamentals.",
+      "Our training follows proven principles with modern clarity.",
+      photo.card2
+    ],
+    [
+      "selfdefense",
+      "Self-defense",
+      "Practical habits for confidence and safety.",
+      "We build situational awareness and steady decision-making.",
+      photo.card3
+    ],
+    [
+      "practice",
+      "Practice",
+      "Consistency, focus and high-quality coaching.",
+      "Every class has structure, progression and clear feedback.",
+      photo.card1
+    ],
+    ["community", "Community", "A welcoming club for children and adults alike.", null, photo.card2],
+    ["start", "Start", "Join your first training with confidence.", null, photo.card3]
   ] as const;
 
   const source = locale === "cs" ? cardsCs : cardsEn;
 
-  return source.map(([key, title, excerpt, image], index) => ({
-    id: `value-${locale}-${key}`,
-    locale,
-    card_key: key,
-    title,
-    excerpt,
-    image_url: image,
-    href:
-      key === "start"
-        ? getPathForPage(locale, "start-here")
-        : key === "tradition"
-          ? `${getPathForPage(locale, "about")}#history`
-          : key === "community"
-            ? `${getPathForPage(locale, "about")}#club`
-            : getPathForPage(locale, "about"),
-    order_index: index + 1
-  }));
+  return source.map(([key, title, excerpt, hoverText, image], index) => {
+    const isModalCard = index < 4;
+
+    return {
+      id: `value-${locale}-${key}`,
+      locale,
+      card_key: key,
+      title,
+      excerpt,
+      hover_text: hoverText,
+      image_url: image,
+      href:
+        key === "start"
+          ? getPathForPage(locale, "start-here")
+          : key === "tradition"
+            ? `${getPathForPage(locale, "about")}#history`
+            : key === "community"
+              ? `${getPathForPage(locale, "about")}#club`
+              : getPathForPage(locale, "about"),
+      action_type: isModalCard ? "modal" : "link",
+      modal_title: isModalCard
+        ? locale === "cs"
+          ? `${title} - detail`
+          : `${title} - detail`
+        : null,
+      modal_body: isModalCard
+        ? locale === "cs"
+          ? "TODO: Doplňte detailní text k této kartě. Můžete přidat příběh, přístup trenérů, konkrétní přínosy i praktické ukázky z tréninku."
+          : "TODO: Add detailed content for this card. You can include coaching approach, real training examples and practical outcomes."
+        : null,
+      modal_image_url: isModalCard ? image : null,
+      modal_image_url_secondary: isModalCard ? photo.heroAlt : null,
+      order_index: index + 1
+    };
+  });
 }
 
 function coaches(locale: Locale): Coach[] {

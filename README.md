@@ -16,6 +16,9 @@ Production-oriented bilingual (Czech/English) multi-page website for **Karate Kl
 - Full bilingual public site (`/cs` + `/en`) with localized route structure
 - Sticky header, recruitment strip, optional info/warning strip
 - Hero, value cards, about preview, coaches, testimonials, map, events/calendar, strong CTA
+- Value cards support hover-reveal text and configurable click action:
+  - `action_type = modal` opens a modal with rich text + 1-2 images
+  - `action_type = link` navigates to `href`
 - Public page tree:
   - `/cs`, `/en`
   - `/cs/o-nas` (single page with `#club`, `#history`, `#trainers` sections)
@@ -73,6 +76,9 @@ Production-oriented bilingual (Czech/English) multi-page website for **Karate Kl
   - strips
   - hero slides
   - value cards
+    - hover paragraph (`hover_text`)
+    - click action (`action_type`: `modal` or `link`)
+    - modal title/body + modal images
   - page texts/SEO
   - coaches/testimonials
   - locations/events

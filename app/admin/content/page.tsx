@@ -166,8 +166,22 @@ export default async function AdminContentPage({ searchParams }: ContentPageProp
                 { name: "card_key", label: "Card Key", required: true },
                 { name: "title", label: "Title", required: true },
                 { name: "excerpt", label: "Excerpt", type: "textarea", required: true },
+                { name: "hover_text", label: "Hover Paragraph", type: "textarea" },
                 { name: "image_url", label: "Image URL", type: "url", required: true },
-                { name: "href", label: "Link URL", required: true },
+                {
+                  name: "action_type",
+                  label: "Click Action",
+                  type: "select",
+                  options: [
+                    { label: "Modal", value: "modal" },
+                    { label: "Link", value: "link" }
+                  ]
+                },
+                { name: "href", label: "Link URL (used when action = link)" },
+                { name: "modal_title", label: "Modal Title" },
+                { name: "modal_body", label: "Modal Body", type: "textarea" },
+                { name: "modal_image_url", label: "Modal Image URL", type: "url" },
+                { name: "modal_image_url_secondary", label: "Modal Secondary Image URL", type: "url" },
                 { name: "order_index", label: "Order", type: "number" }
               ]}
               record={{ ...record, locale }}
