@@ -80,9 +80,13 @@ export function getLocalizedSlugs(locale: Locale, key: PageKey) {
 
 export function getAllRouteParams() {
   const params: { locale: Locale; slug?: string[] }[] = [];
+  const hiddenRouteKeys: PageKey[] = ["about-club", "about-history", "about-coaches"];
 
   for (const locale of locales) {
     for (const key of Object.keys(routeByKey) as PageKey[]) {
+      if (hiddenRouteKeys.includes(key)) {
+        continue;
+      }
       const slugs = routeByKey[key][locale];
       params.push({
         locale,
@@ -111,7 +115,7 @@ export function getPageTitle(locale: Locale, pageKey: PageKey) {
 }
 
 export function getAboutSubpages() {
-  return ["about", "about-club", "about-history", "about-coaches"] as PageKey[];
+  return ["about"] as PageKey[];
 }
 
 export function getStudentSubpages() {

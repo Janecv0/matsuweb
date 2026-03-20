@@ -18,8 +18,8 @@ Production-oriented bilingual (Czech/English) multi-page website for **Karate Kl
 - Hero, value cards, about preview, coaches, testimonials, map, events/calendar, strong CTA
 - Public page tree:
   - `/cs`, `/en`
-  - `/cs/o-nas`, `/cs/o-nas/klub`, `/cs/o-nas/historie`, `/cs/o-nas/treneri`
-  - `/en/about`, `/en/about/club`, `/en/about/history`, `/en/about/coaches`
+  - `/cs/o-nas` (single page with `#club`, `#history`, `#trainers` sections)
+  - `/en/about` (single page with `#club`, `#history`, `#trainers` sections)
   - `/cs/chci-zacit`, `/en/start-here`
   - `/cs/pro-studenty`, `/cs/pro-studenty/zkusebni-rad`, `/cs/pro-studenty/slovnicek`, `/cs/pro-studenty/etiketa`, `/cs/pro-studenty/etika`
   - `/en/for-students`, `/en/for-students/examination-rules`, `/en/for-students/vocabulary`, `/en/for-students/etiquette`, `/en/for-students/ethics`
@@ -30,6 +30,7 @@ Production-oriented bilingual (Czech/English) multi-page website for **Karate Kl
 - Media upload to Supabase Storage (`/admin/media`)
 - Foundation for future member-only content (`is_member_only`, `/members` scaffold)
 - SEO basics, sitemap, robots
+- Legacy About subpage URLs redirect to anchors on the single About page
 
 ## Project Structure
 - `app/[locale]/*`: localized public routes

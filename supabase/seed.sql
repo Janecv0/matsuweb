@@ -35,16 +35,16 @@ values
 insert into public.value_cards (locale, card_key, title, excerpt, image_url, href, order_index)
 values
   ('cs', 'meaning', 'Smysl', 'Karate jako dlouhodobá cesta, ne rychlý efekt.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/cs/o-nas', 1),
-  ('cs', 'tradition', 'Tradice', 'Respekt, etiketa dojo a poctivá technika.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/cs/o-nas/historie', 2),
+  ('cs', 'tradition', 'Tradice', 'Respekt, etiketa dojo a poctivá technika.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/cs/o-nas#history', 2),
   ('cs', 'selfdefense', 'Sebeobrana', 'Praktické návyky pro bezpečný život.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 3),
   ('cs', 'practice', 'Praxe', 'Pravidelnost, koncentrace a kvalitní vedení.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 4),
-  ('cs', 'community', 'My', 'Přátelský klub pro děti i dospělé.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/cs/o-nas/klub', 5),
+  ('cs', 'community', 'My', 'Přátelský klub pro děti i dospělé.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/cs/o-nas#club', 5),
   ('cs', 'start', 'Začít', 'Bez obav. Přijďte si vyzkoušet první trénink.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/cs/chci-zacit', 6),
   ('en', 'meaning', 'Meaning', 'Karate as a long-term path.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/en/about', 1),
-  ('en', 'tradition', 'Tradition', 'Respect, dojo etiquette and fundamentals.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/en/about/history', 2),
+  ('en', 'tradition', 'Tradition', 'Respect, dojo etiquette and fundamentals.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/en/about#history', 2),
   ('en', 'selfdefense', 'Self-defense', 'Practical habits for confidence.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/en/start-here', 3),
   ('en', 'practice', 'Practice', 'Consistency, focus and quality coaching.', 'https://images.unsplash.com/photo-1528701800489-20be9c1f25f3?auto=format&fit=crop&w=900&q=80', '/en/start-here', 4),
-  ('en', 'community', 'Community', 'A welcoming club for families.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/en/about/club', 5),
+  ('en', 'community', 'Community', 'A welcoming club for families.', 'https://images.unsplash.com/photo-1599058917213-7da9e4d0f9e0?auto=format&fit=crop&w=900&q=80', '/en/about#club', 5),
   ('en', 'start', 'Start', 'Join your first training with confidence.', 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80', '/en/start-here', 6)
 on conflict (locale, card_key) do update set
   title = excluded.title,
@@ -175,7 +175,11 @@ values
   ('cs', 'google_calendar_embed_url', ''),
   ('en', 'google_calendar_embed_url', ''),
   ('cs', 'hero_photo_credit', 'TODO: Nahraďte vlastními fotografiemi klubu.'),
-  ('en', 'hero_photo_credit', 'TODO: Replace with original club photography.')
+  ('en', 'hero_photo_credit', 'TODO: Replace with original club photography.'),
+  ('cs', 'about_club_image_url', 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1400&q=80'),
+  ('en', 'about_club_image_url', 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1400&q=80'),
+  ('cs', 'about_history_image_url', 'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1400&q=80'),
+  ('en', 'about_history_image_url', 'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1400&q=80')
 on conflict (locale, setting_key) do update set
   setting_value = excluded.setting_value;
 

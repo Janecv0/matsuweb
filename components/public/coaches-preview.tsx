@@ -17,7 +17,7 @@ export function CoachesPreview({ locale, coaches, title }: CoachesPreviewProps) 
       <div className="mb-7 flex items-end justify-between gap-4">
         <h2 className="text-3xl sm:text-4xl">{title}</h2>
         <Link
-          href={getPathForPage(locale, "about-coaches")}
+          href={`${getPathForPage(locale, "about")}#trainers`}
           className="focus-ring text-sm font-semibold uppercase tracking-[0.14em] text-ember"
         >
           {locale === "cs" ? "Všichni trenéři" : "All coaches"}

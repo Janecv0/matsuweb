@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { PageRenderer } from "@/components/public/page-renderer";
 import { PublicShell } from "@/components/public/public-shell";
 import { getPageContentByKey, getPublicContent } from "@/lib/content/public-content";
-import { getAllRouteParams, isLocale, resolvePageKey } from "@/lib/i18n";
+import { getAllRouteParams, getPathForPage, isLocale, resolvePageKey } from "@/lib/i18n";
 
 interface DynamicPageProps {
   params: Promise<{ locale: string; slug: string[] }>;
@@ -48,6 +48,16 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
   const pageKey = resolvePageKey(locale, slug);
   if (!pageKey || pageKey === "home") {
     notFound();
+  }
+
+  const aboutRedirectSection: Partial<Record<string, string>> = {
+    "about-club": "club",
+    "about-history": "history",
+    "about-coaches": "trainers"
+  };
+
+  if (aboutRedirectSection[pageKey]) {
+    redirect(`${getPathForPage(locale, "about")}#${aboutRedirectSection[pageKey]}`);
   }
 
   const content = await getPublicContent(locale);

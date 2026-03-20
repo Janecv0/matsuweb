@@ -1,12 +1,14 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/public/breadcrumbs";
+import { CoachesCarouselModal } from "@/components/public/coaches-carousel-modal";
 import { BeginnerForm } from "@/components/forms/beginner-form";
 import { ContactForm } from "@/components/forms/contact-form";
 import { GlossaryTable } from "@/components/public/glossary-table";
 import { MarkdownBlock } from "@/components/public/markdown-block";
 import { PageSubnav } from "@/components/public/page-subnav";
 import { SubpageHeader } from "@/components/public/subpage-header";
-import { getPageContentByKey } from "@/lib/content/public-content";
+import { getPageContentByKey, getSetting } from "@/lib/content/public-content";
 import { getPageTitle, getPathForPage, uiDictionary } from "@/lib/i18n";
 import { dayOfWeekLabel } from "@/lib/utils";
 import { Locale, PageKey, PublicContentBundle } from "@/lib/types";
@@ -15,15 +17,6 @@ interface PageRendererProps {
   locale: Locale;
   pageKey: PageKey;
   content: PublicContentBundle;
-}
-
-function aboutSubnav(locale: Locale) {
-  return [
-    { key: "about" as const, label: getPageTitle(locale, "about") },
-    { key: "about-club" as const, label: getPageTitle(locale, "about-club") },
-    { key: "about-history" as const, label: getPageTitle(locale, "about-history") },
-    { key: "about-coaches" as const, label: getPageTitle(locale, "about-coaches") }
-  ];
 }
 
 function studentsSubnav(locale: Locale) {
@@ -50,62 +43,91 @@ export function PageRenderer({ locale, pageKey, content }: PageRendererProps) {
     );
   }
 
-  const aboutNavigation = aboutSubnav(locale);
   const studentNavigation = studentsSubnav(locale);
 
   if (pageKey === "about") {
+    const aboutClub = getPageContentByKey(content, "about-club");
+    const aboutHistory = getPageContentByKey(content, "about-history");
+    const aboutCoaches = getPageContentByKey(content, "about-coaches");
+    const clubImageUrl =
+      getSetting(content, "about_club_image_url") ||
+      "https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1400&q=80";
+    const historyImageUrl =
+      getSetting(content, "about_history_image_url") ||
+      "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=1400&q=80";
+
     return (
       <>
         <SubpageHeader locale={locale} title={page.title} subtitle={page.subtitle} intro={page.intro} />
-        <section className="section-shell mt-10 grid gap-6 lg:grid-cols-[1.2fr,1fr]">
-          <div className="surface p-6">
-            {page.body_markdown ? <MarkdownBlock content={page.body_markdown} /> : null}
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              {aboutNavigation
-                .filter((item) => item.key !== "about")
-                .map((item) => (
-                  <Link
-                    key={item.key}
-                    href={getPathForPage(locale, item.key)}
-                    className="focus-ring rounded-lg border border-black/10 bg-white/75 px-4 py-3 text-sm font-semibold hover:bg-white"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+        <section className="section-shell mt-8 flex flex-wrap gap-2">
+          {[
+            { id: "club", label: getPageTitle(locale, "about-club") },
+            { id: "history", label: getPageTitle(locale, "about-history") },
+            { id: "trainers", label: getPageTitle(locale, "about-coaches") }
+          ].map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className="focus-ring rounded-full border border-black/10 bg-white/80 px-4 py-2 text-sm font-semibold hover:bg-white"
+            >
+              {item.label}
+            </a>
+          ))}
+        </section>
+
+        <section id="club" className="section-shell mt-8 grid gap-6 lg:grid-cols-[1fr,1.1fr] lg:items-start">
+          <div className="surface overflow-hidden">
+            <div className="relative h-[280px] sm:h-[360px]">
+              <Image src={clubImageUrl} alt={aboutClub?.title ?? page.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 45vw" />
             </div>
           </div>
-          <PageSubnav locale={locale} current={pageKey} items={aboutNavigation} />
+          <article className="surface p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ember">
+              {aboutClub?.subtitle ?? (locale === "cs" ? "Klub" : "Club")}
+            </p>
+            <h2 className="mt-2 text-3xl">{aboutClub?.title ?? (locale === "cs" ? "Klub" : "Club")}</h2>
+            <p className="mt-4 text-base leading-7 text-muted">{aboutClub?.intro ?? page.intro}</p>
+            <div className="prose-content mt-5">
+              <MarkdownBlock content={aboutClub?.body_markdown ?? page.body_markdown ?? ""} />
+            </div>
+          </article>
         </section>
-      </>
-    );
-  }
 
-  if (pageKey === "about-club" || pageKey === "about-history" || pageKey === "about-coaches") {
-    return (
-      <>
-        <section className="section-shell mt-8">
-          <Breadcrumbs locale={locale} pageKey={pageKey} />
+        <section id="history" className="section-shell mt-6 grid gap-6 lg:grid-cols-[1.1fr,1fr] lg:items-start">
+          <article className="surface p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ember">
+              {aboutHistory?.subtitle ?? (locale === "cs" ? "Historie" : "History")}
+            </p>
+            <h2 className="mt-2 text-3xl">{aboutHistory?.title ?? (locale === "cs" ? "Historie" : "History")}</h2>
+            <p className="mt-4 text-base leading-7 text-muted">{aboutHistory?.intro ?? page.intro}</p>
+            <div className="prose-content mt-5">
+              <MarkdownBlock content={aboutHistory?.body_markdown ?? page.body_markdown ?? ""} />
+            </div>
+          </article>
+          <div className="surface overflow-hidden">
+            <div className="relative h-[280px] sm:h-[360px]">
+              <Image src={historyImageUrl} alt={aboutHistory?.title ?? (locale === "cs" ? "Historie klubu" : "Club history")} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 45vw" />
+            </div>
+          </div>
         </section>
-        <SubpageHeader locale={locale} title={page.title} subtitle={page.subtitle} intro={page.intro} />
-        <section className="section-shell mt-10 grid gap-6 lg:grid-cols-[1.3fr,0.9fr]">
-          <div className="surface p-6">
-            {page.body_markdown ? <MarkdownBlock content={page.body_markdown} /> : null}
 
-            {pageKey === "about-coaches" ? (
-              <div className="mt-8 grid gap-4 md:grid-cols-2">
-                {content.coaches.sort((a, b) => a.order_index - b.order_index).map((coach) => (
-                  <article key={coach.id} className="rounded-xl border border-black/10 bg-white/70 p-4">
-                    <h3 className="text-xl">{coach.name}</h3>
-                    {coach.rank_title ? (
-                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ember">{coach.rank_title}</p>
-                    ) : null}
-                    <p className="mt-2 text-sm leading-6 text-muted">{coach.long_bio ?? coach.short_bio}</p>
-                  </article>
-                ))}
+        <section id="trainers" className="section-shell mt-6 pb-2">
+          <article className="surface p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ember">
+              {aboutCoaches?.subtitle ?? (locale === "cs" ? "Trenéři" : "Coaches")}
+            </p>
+            <h2 className="mt-2 text-3xl">{aboutCoaches?.title ?? (locale === "cs" ? "Trenéři" : "Coaches")}</h2>
+            <p className="mt-4 text-base leading-7 text-muted">{aboutCoaches?.intro ?? page.intro}</p>
+            {aboutCoaches?.body_markdown ? (
+              <div className="prose-content mt-5">
+                <MarkdownBlock content={aboutCoaches.body_markdown} />
               </div>
             ) : null}
-          </div>
-          <PageSubnav locale={locale} current={pageKey} items={aboutNavigation} />
+
+            <div className="mt-8">
+              <CoachesCarouselModal locale={locale} coaches={content.coaches} />
+            </div>
+          </article>
         </section>
       </>
     );

@@ -236,7 +236,14 @@ function valueCards(locale: Locale): ValueCard[] {
     title,
     excerpt,
     image_url: image,
-    href: key === "start" ? getPathForPage(locale, "start-here") : getPathForPage(locale, "about"),
+    href:
+      key === "start"
+        ? getPathForPage(locale, "start-here")
+        : key === "tradition"
+          ? `${getPathForPage(locale, "about")}#history`
+          : key === "community"
+            ? `${getPathForPage(locale, "about")}#club`
+            : getPathForPage(locale, "about"),
     order_index: index + 1
   }));
 }
@@ -987,6 +994,18 @@ function settings(locale: Locale): SiteSetting[] {
       locale,
       setting_key: "google_calendar_embed_url",
       setting_value: ""
+    },
+    {
+      id: `setting-${locale}-about-club-image`,
+      locale,
+      setting_key: "about_club_image_url",
+      setting_value: photo.hero
+    },
+    {
+      id: `setting-${locale}-about-history-image`,
+      locale,
+      setting_key: "about_history_image_url",
+      setting_value: photo.heroAlt
     }
   ];
 }
