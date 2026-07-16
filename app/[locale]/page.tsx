@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -43,6 +44,15 @@ export default async function HomePage({ params }: HomePageProps) {
 
   const c = getSiteContent(locale);
 
+  // Photo for each value card, keyed by the stable card key from site-content.
+  const cardImages: Record<string, string> = {
+    smysl: "/images/mind-meditation.jpg",
+    tradice: "/images/kata-sunset.jpg",
+    sebeobrana: "/images/selfdefense-sunset.jpg",
+    praxe: "/images/coach-demo.jpg",
+    my: "/images/generations.jpg"
+  };
+
   return (
     <PublicShell locale={locale}>
       {/* Hero */}
@@ -70,7 +80,14 @@ export default async function HomePage({ params }: HomePageProps) {
             </Link>
           </div>
         </div>
-        <PhotoSlot note={c.hero.photoNote} className="h-[320px] sm:h-[380px]" />
+        <PhotoSlot
+          src="/images/hero-coach-kid.png"
+          alt={c.hero.title}
+          objectPosition="object-top"
+          priority
+          className="h-[320px] sm:h-[440px]"
+          sizes="(max-width: 1024px) 100vw, 45vw"
+        />
       </section>
 
       {/* Value cards */}
@@ -94,10 +111,20 @@ export default async function HomePage({ params }: HomePageProps) {
               >
                 <div
                   className={cn(
-                    "h-40",
+                    "relative h-40 overflow-hidden",
                     card.cta ? "bg-white/10" : "stripe bg-warm/40"
                   )}
-                />
+                >
+                  {!card.cta && cardImages[card.key] ? (
+                    <Image
+                      src={cardImages[card.key]}
+                      alt={card.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover"
+                    />
+                  ) : null}
+                </div>
                 <div className="p-6">
                   <h3
                     className={cn(
@@ -124,7 +151,14 @@ export default async function HomePage({ params }: HomePageProps) {
 
       {/* Family band */}
       <section className="mx-6 mb-10 grid items-center gap-9 rounded-[32px] bg-warm p-8 sm:mx-12 sm:p-10 lg:grid-cols-2">
-        <PhotoSlot className="h-[260px]" rounded="rounded-2xl" />
+        <PhotoSlot
+          src="/images/hero-coach-kid.png"
+          alt={c.familyBand.title}
+          objectPosition="object-top"
+          className="h-[260px] sm:h-[320px]"
+          rounded="rounded-2xl"
+          sizes="(max-width: 1024px) 100vw, 45vw"
+        />
         <div>
           <h2 className="font-display text-2xl font-bold leading-[1.25] text-ink sm:text-3xl">
             {c.familyBand.title}

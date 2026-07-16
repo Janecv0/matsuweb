@@ -44,7 +44,12 @@ export function PageRenderer({ locale, pageKey, content }: PageRendererProps) {
             <h2 className="font-display text-2xl font-bold text-ink sm:text-3xl">{about.club.title}</h2>
             <p className="mt-3.5 text-base leading-7 text-muted">{about.club.body}</p>
           </div>
-          <PhotoSlot className="h-[280px]" />
+          <PhotoSlot
+            src="/images/generations.jpg"
+            alt={about.club.title}
+            className="h-[280px]"
+            sizes="(max-width: 1024px) 100vw, 45vw"
+          />
         </section>
 
         <section id="history" className="bg-white px-6 py-14 sm:px-12">
@@ -94,7 +99,14 @@ export function PageRenderer({ locale, pageKey, content }: PageRendererProps) {
             </h1>
             <p className="mt-3.5 max-w-[520px] text-base leading-7 text-muted">{startHere.intro}</p>
           </div>
-          <PhotoSlot className="h-[200px]" rounded="rounded-2xl" />
+          <PhotoSlot
+            src="/images/coach-demo.jpg"
+            alt={startHere.title}
+            objectPosition="object-top"
+            className="h-[220px] sm:h-[280px]"
+            rounded="rounded-2xl"
+            sizes="(max-width: 1024px) 100vw, 40vw"
+          />
         </div>
 
         <section className="px-6 py-14 sm:px-12">

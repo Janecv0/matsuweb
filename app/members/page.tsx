@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { signOutAction } from "@/app/admin/actions";
@@ -75,9 +76,13 @@ export default async function MembersPage({ searchParams }: MembersPageProps) {
       {/* top bar */}
       <div className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-4 sm:px-10">
         <Link href={`/${locale}`} className="focus-ring flex items-center gap-2.5 rounded-xl">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-ember font-display text-base font-bold text-white">
-            松
-          </span>
+          <Image
+            src="/images/logo.jpg"
+            alt="Karate Klub Matsu"
+            width={36}
+            height={36}
+            className="h-9 w-9 rounded-full object-cover"
+          />
           <span className="font-display text-base font-bold text-paper">Karate Klub Matsu</span>
         </Link>
         <div className="flex items-center gap-2">
