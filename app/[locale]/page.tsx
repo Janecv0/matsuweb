@@ -1,12 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PublicShell } from "@/components/public/public-shell";
 import { PhotoSlot } from "@/components/public/photo-slot";
+import { ValueCards } from "@/components/public/value-cards";
 import { getSiteContent } from "@/lib/content/site-content";
 import { isLocale, getPathForPage, locales } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -94,59 +93,16 @@ export default async function HomePage({ params }: HomePageProps) {
       <section className="px-6 pb-16 sm:px-12">
         <h2 className="text-center font-display text-3xl font-bold text-ink">{c.values.title}</h2>
         <p className="mt-2 text-center text-[15px] text-muted">{c.values.subtitle}</p>
-        <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {c.values.cards.map((card) => {
-            const Wrapper = card.cta ? Link : "div";
-            const wrapperProps = card.cta
-              ? { href: getPathForPage(locale, "start-here") }
-              : {};
-            return (
-              <Wrapper
-                key={card.key}
-                {...(wrapperProps as { href: string })}
-                className={cn(
-                  "block overflow-hidden rounded-3xl shadow-card",
-                  card.cta ? "bg-sage text-white" : "bg-white"
-                )}
-              >
-                <div
-                  className={cn(
-                    "relative h-40 overflow-hidden",
-                    card.cta ? "bg-white/10" : "stripe bg-warm/40"
-                  )}
-                >
-                  {!card.cta && cardImages[card.key] ? (
-                    <Image
-                      src={cardImages[card.key]}
-                      alt={card.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover"
-                    />
-                  ) : null}
-                </div>
-                <div className="p-6">
-                  <h3
-                    className={cn(
-                      "font-display text-xl font-bold",
-                      card.cta ? "text-white" : "text-ember"
-                    )}
-                  >
-                    {card.title}
-                  </h3>
-                  <p
-                    className={cn(
-                      "mt-1.5 text-[13px] leading-6",
-                      card.cta ? "text-white/85" : "text-muted"
-                    )}
-                  >
-                    {card.text}
-                  </p>
-                </div>
-              </Wrapper>
-            );
-          })}
-        </div>
+        <ValueCards
+          cards={c.values.cards}
+          images={cardImages}
+          startHref={getPathForPage(locale, "start-here")}
+          labels={{
+            close: locale === "cs" ? "Zavřít" : "Close",
+            more: locale === "cs" ? "Více" : "More",
+            startCta: c.nav.start
+          }}
+        />
       </section>
 
       {/* Family band */}

@@ -25,12 +25,73 @@ const cs: SiteContent = {
     title: "Proč rodiny volí Matsu",
     subtitle: "Šest věcí, na kterých nám záleží nejvíc",
     cards: [
-      { key: "smysl", title: "sMYSL", text: "Klid a soustředění, které si děti odnesou i do školy." },
-      { key: "tradice", title: "Tradice", text: "Přes 30 let zkušeností s výukou dětí i dospělých." },
-      { key: "sebeobrana", title: "Sebeobrana", text: "Praktické dovednosti přizpůsobené věku a úrovni." },
-      { key: "praxe", title: "Praxe", text: "Pravidelný rozvrh, tábory a společné akce." },
-      { key: "my", title: "MY", text: "Komunita rodičů a dětí, co drží pohromadě." },
-      { key: "zacit", title: "Začít", text: "Napište nám a domluvíme první zkušební hodinu.", cta: true }
+      {
+        key: "smysl",
+        title: "sMYSL",
+        text: "Klid a soustředění, které si děti odnesou i do školy.",
+        hover: "Trénink mysli je stejně důležitý jako trénink těla — soustředění, sebeovládání, práce s dechem.",
+        modalBody: [
+          "V Matsu chápeme karate jako cestu (dó), ne jen jako sport. Každý trénink začíná a končí zklidněním mysli.",
+          "Děti se učí soustředit se na jednu věc, zvládat trému i frustraci a nést odpovědnost za své jednání. Tyto dovednosti si odnášejí do školy i do života.",
+          "Pravidelná praxe rozvíjí trpělivost a pokoru — hodnoty, které dnešní svět často opomíjí."
+        ]
+      },
+      {
+        key: "tradice",
+        title: "Tradice",
+        text: "Přes 30 let zkušeností s výukou dětí i dospělých.",
+        hover: "Navazujeme na odkaz tradičního karate předávaný z mistra na žáka už od roku 1990.",
+        modalBody: [
+          "Karate Klub Matsu vznikl v roce 1990 a od té doby zůstává věrný tradičnímu pojetí karate.",
+          "Naši trenéři prošli stejnou cestou jako dnešní žáci — od bílého pásu po černý — a předávají dál nejen techniku, ale i etiketu a hodnoty dojo.",
+          "Tradice pro nás neznamená strnulost. Znamená pevné základy, na kterých stavíme moderní a bezpečný trénink."
+        ]
+      },
+      {
+        key: "sebeobrana",
+        title: "Sebeobrana",
+        text: "Praktické dovednosti přizpůsobené věku a úrovni.",
+        hover: "Učíme reálnou sebeobranu — jak předejít konfliktu i jak se ubránit, když je to nutné.",
+        modalBody: [
+          "Sebeobrana v Matsu vychází z karate, ale je doplněná o praktické situace z běžného života.",
+          "Děti se učí rozpoznat nebezpečí, říct si o pomoc a bránit se šikaně. Dospělí trénují techniky pro reálné situace.",
+          "Vše probíhá v bezpečném prostředí a s ohledem na věk a schopnosti každého cvičence."
+        ]
+      },
+      {
+        key: "praxe",
+        title: "Praxe",
+        text: "Pravidelný rozvrh, tábory a společné akce.",
+        hover: "Trénujeme 2× týdně, pořádáme soustředění, letní tábory a přátelské turnaje.",
+        modalBody: [
+          "Pravidelnost je klíč. Standardně trénujeme dvakrát týdně, pokročilí mají možnost třetího tréninku.",
+          "Během roku pořádáme víkendová soustředění, letní tábor a přátelská setkání s dalšími kluby.",
+          "Zkoušky na vyšší pásy probíhají dvakrát ročně a jsou pro žáky důležitým milníkem."
+        ]
+      },
+      {
+        key: "my",
+        title: "MY",
+        text: "Komunita rodičů a dětí, co drží pohromadě.",
+        hover: "Nejsme jen klub — jsme parta lidí, kteří si pomáhají na tatami i mimo něj.",
+        modalBody: [
+          "Matsu je malý rodinný klub, kde se všichni znají jménem.",
+          "Rodiče nejsou jen diváci — zapojují se do akcí, výletů a života klubu. Starší žáci pomáhají mladším.",
+          "Věříme, že nejlepší motivací je dobrá parta, se kterou se člověk těší na každý trénink."
+        ]
+      },
+      {
+        key: "zacit",
+        title: "Začít",
+        text: "Napište nám a domluvíme první zkušební hodinu.",
+        hover: "První hodina je vždy zdarma a nezávazná — stačí přijít v pohodlném oblečení.",
+        modalBody: [
+          "Začít je jednoduché. Vyplňte přihlášku nebo nám napište a domluvíme termín první ukázkové hodiny.",
+          "První trénink je zdarma a k ničemu vás nezavazuje. Stačí sportovní oblečení, o zbytek se postaráme.",
+          "Přijímáme děti od 6 let i dospělé bez omezení věku. Těšíme se na vás!"
+        ],
+        cta: true
+      }
     ]
   },
   familyBand: {
@@ -65,7 +126,7 @@ const cs: SiteContent = {
     history: {
       title: "Naše historie",
       entries: [
-        { year: "1990", text: "Založení klubu v tělocvičně ZŠ Menšíkova." },
+        { year: "1990", text: "Založení klubu v tělocvičně ZŠ Mendíků." },
         { year: "2004", text: "Otevření dětské skupiny a rozšíření rozvrhu." },
         { year: "2015", text: "Přes 100 aktivních členů, nová tělocvična." },
         { year: "2026", text: "36 let tradice, tři generace jedné rodiny." }
@@ -174,12 +235,12 @@ const cs: SiteContent = {
     eyebrow: "Kontakty",
     title: "Ozvěte se nám",
     cards: [
-      { title: "Tělocvična ZŠ Menšíkova", lines: ["Menšíkova 620, Praha 4"] },
+      { title: "Tělocvična ZŠ Mendíků", lines: ["Mendíků 1, Praha 4 – Nusle"] },
       { title: "E-mail a telefon", lines: ["kolencik@gmail.com", "+420 777 123 456"] },
       { title: "Sítě", lines: ["Instagram · Facebook"] }
     ],
-    mapEmbedUrl: "",
-    mapLabel: "mapa: Google Maps"
+    mapEmbedUrl: "https://mapy.com/s/pegegujudu",
+    mapLabel: "mapa: Mapy.com"
   },
   members: {
     eyebrow: "Členská sekce",
@@ -265,7 +326,7 @@ const cs: SiteContent = {
     }
   },
   footer: {
-    tagline: "Tělocvična ZŠ Menšíkova, Praha",
+    tagline: "Tělocvična ZŠ Mendíků, Praha 4",
     navLabel: "Navigace",
     socialLabel: "Sítě",
     socials: [
@@ -299,12 +360,73 @@ const en: SiteContent = {
     title: "Why families choose Matsu",
     subtitle: "The six things we care about most",
     cards: [
-      { key: "smysl", title: "MIND", text: "Calm and focus that children carry into school and beyond." },
-      { key: "tradice", title: "Tradition", text: "Over 30 years of experience teaching kids and adults." },
-      { key: "sebeobrana", title: "Self-defence", text: "Practical skills adapted to age and level." },
-      { key: "praxe", title: "Practice", text: "A regular schedule, camps and shared events." },
-      { key: "my", title: "US", text: "A community of parents and children that sticks together." },
-      { key: "zacit", title: "Start", text: "Message us and we'll arrange your first trial lesson.", cta: true }
+      {
+        key: "smysl",
+        title: "MIND",
+        text: "Calm and focus that children carry into school and beyond.",
+        hover: "Training the mind matters as much as training the body — focus, self-control and breathing.",
+        modalBody: [
+          "At Matsu we see karate as a way (dō), not just a sport. Every session begins and ends by settling the mind.",
+          "Children learn to focus on one thing, to handle nerves and frustration, and to take responsibility for their actions — skills they carry into school and life.",
+          "Regular practice builds patience and humility, values today's world often overlooks."
+        ]
+      },
+      {
+        key: "tradice",
+        title: "Tradition",
+        text: "Over 30 years of experience teaching kids and adults.",
+        hover: "We carry on the legacy of traditional karate, passed from master to student since 1990.",
+        modalBody: [
+          "Karate Klub Matsu was founded in 1990 and has stayed true to a traditional approach ever since.",
+          "Our coaches walked the same path as today's students — from white belt to black — and pass on not only technique but the etiquette and values of the dojo.",
+          "Tradition doesn't mean rigidity. It means solid foundations on which we build modern, safe training."
+        ]
+      },
+      {
+        key: "sebeobrana",
+        title: "Self-defence",
+        text: "Practical skills adapted to age and level.",
+        hover: "We teach real self-defence — how to avoid conflict, and how to protect yourself when you must.",
+        modalBody: [
+          "Self-defence at Matsu is rooted in karate but supplemented with practical, everyday situations.",
+          "Children learn to recognise danger, ask for help and stand up to bullying. Adults train techniques for real situations.",
+          "Everything happens in a safe environment, with respect for each student's age and ability."
+        ]
+      },
+      {
+        key: "praxe",
+        title: "Practice",
+        text: "A regular schedule, camps and shared events.",
+        hover: "We train twice a week, with camps, seminars and friendly tournaments through the year.",
+        modalBody: [
+          "Consistency is key. We train twice a week as standard, with a third session available for advanced students.",
+          "Through the year we run weekend seminars, a summer camp and friendly meet-ups with other clubs.",
+          "Belt exams take place twice a year and are an important milestone for every student."
+        ]
+      },
+      {
+        key: "my",
+        title: "US",
+        text: "A community of parents and children that sticks together.",
+        hover: "We're not just a club — we're a group of people who help each other on and off the mat.",
+        modalBody: [
+          "Matsu is a small family club where everyone knows each other by name.",
+          "Parents aren't just spectators — they join in events, trips and the life of the club. Older students help the younger ones.",
+          "We believe the best motivation is good company you look forward to training with."
+        ]
+      },
+      {
+        key: "zacit",
+        title: "Start",
+        text: "Message us and we'll arrange your first trial lesson.",
+        hover: "Your first lesson is always free and no-obligation — just come in comfortable clothes.",
+        modalBody: [
+          "Getting started is easy. Fill in the form or message us and we'll arrange a first trial lesson.",
+          "The first session is free and commits you to nothing. Bring sports clothing — we'll handle the rest.",
+          "We welcome children from age 6 and adults of any age. We look forward to meeting you!"
+        ],
+        cta: true
+      }
     ]
   },
   familyBand: {
@@ -339,7 +461,7 @@ const en: SiteContent = {
     history: {
       title: "Our history",
       entries: [
-        { year: "1990", text: "The club is founded in the Menšíkova primary-school gym." },
+        { year: "1990", text: "The club is founded in the Mendíků primary-school gym." },
         { year: "2004", text: "A children's group opens and the schedule expands." },
         { year: "2015", text: "Over 100 active members and a new training hall." },
         { year: "2026", text: "36 years of tradition, three generations of one family." }
@@ -448,12 +570,12 @@ const en: SiteContent = {
     eyebrow: "Contact",
     title: "Get in touch",
     cards: [
-      { title: "Menšíkova primary-school gym", lines: ["Menšíkova 620, Prague 4"] },
+      { title: "Mendíků primary-school gym", lines: ["Mendíků 1, Prague 4 – Nusle"] },
       { title: "Email and phone", lines: ["kolencik@gmail.com", "+420 777 123 456"] },
       { title: "Social", lines: ["Instagram · Facebook"] }
     ],
-    mapEmbedUrl: "",
-    mapLabel: "map: Google Maps"
+    mapEmbedUrl: "https://mapy.com/s/pegegujudu",
+    mapLabel: "map: Mapy.com"
   },
   members: {
     eyebrow: "Members",
@@ -539,7 +661,7 @@ const en: SiteContent = {
     }
   },
   footer: {
-    tagline: "Menšíkova primary-school gym, Prague",
+    tagline: "Mendíků primary-school gym, Prague 4",
     navLabel: "Navigation",
     socialLabel: "Social",
     socials: [

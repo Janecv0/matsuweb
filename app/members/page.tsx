@@ -74,7 +74,7 @@ export default async function MembersPage({ searchParams }: MembersPageProps) {
   return (
     <main className="min-h-screen bg-ink text-paper">
       {/* top bar */}
-      <div className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-4 sm:px-10">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 px-6 py-4 sm:px-10">
         <Link href={`/${locale}`} className="focus-ring flex items-center gap-2.5 rounded-xl">
           <Image
             src="/images/logo.jpg"
@@ -85,7 +85,29 @@ export default async function MembersPage({ searchParams }: MembersPageProps) {
           />
           <span className="font-display text-base font-bold text-paper">Karate Klub Matsu</span>
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {session.role === "admin" ? (
+            <nav className="mr-1 flex items-center gap-1 border-r border-white/15 pr-2 text-sm">
+              <Link
+                href="/admin"
+                className="focus-ring rounded-md px-3 py-1.5 text-paper/80 hover:bg-white/5 hover:text-paper"
+              >
+                Přehled
+              </Link>
+              <Link
+                href="/admin/content"
+                className="focus-ring rounded-md px-3 py-1.5 text-paper/80 hover:bg-white/5 hover:text-paper"
+              >
+                Obsah
+              </Link>
+              <Link
+                href="/admin/submissions"
+                className="focus-ring rounded-md px-3 py-1.5 text-paper/80 hover:bg-white/5 hover:text-paper"
+              >
+                Formuláře
+              </Link>
+            </nav>
+          ) : null}
           <div className="inline-flex items-center rounded-full border border-white/15 p-1 text-xs font-semibold uppercase">
             {(["cs", "en"] as Locale[]).map((target) => (
               <Link
@@ -101,6 +123,7 @@ export default async function MembersPage({ searchParams }: MembersPageProps) {
             ))}
           </div>
           <form action={signOutAction}>
+            <input type="hidden" name="redirectTo" value={`/${locale}`} />
             <button
               type="submit"
               className="focus-ring rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-paper/90 hover:bg-white/5"

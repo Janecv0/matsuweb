@@ -5,16 +5,18 @@ import { cn } from "@/lib/utils";
 interface MatsuLogoProps {
   href: string;
   variant?: "light" | "dark";
+  /** Hide the wordmark on the smallest screens (used in the header to save space). */
+  compact?: boolean;
   className?: string;
 }
 
 /** The pine-roundel logo + wordmark used in the header (light) and footer (dark). */
-export function MatsuLogo({ href, variant = "light", className }: MatsuLogoProps) {
+export function MatsuLogo({ href, variant = "light", compact = false, className }: MatsuLogoProps) {
   return (
     <Link
       href={href}
       aria-label="Karate Klub Matsu"
-      className={cn("focus-ring inline-flex items-center gap-3 rounded-xl", className)}
+      className={cn("focus-ring inline-flex min-w-0 items-center gap-3 rounded-xl", className)}
     >
       <Image
         src="/images/logo.jpg"
@@ -22,11 +24,12 @@ export function MatsuLogo({ href, variant = "light", className }: MatsuLogoProps
         width={44}
         height={44}
         priority
-        className="h-[44px] w-[44px] rounded-full object-cover"
+        className="h-[44px] w-[44px] shrink-0 rounded-full object-cover"
       />
       <span
         className={cn(
-          "font-display text-lg font-bold",
+          "truncate font-display text-lg font-bold",
+          compact ? "hidden sm:inline" : "",
           variant === "dark" ? "text-paper" : "text-ink"
         )}
       >

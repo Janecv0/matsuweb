@@ -40,7 +40,7 @@ export function MobileMenu({
       {open ? (
         <div
           id="mobile-navigation"
-          className="absolute right-0 top-full z-50 mt-2 w-60 rounded-2xl border border-black/10 bg-paper/95 p-3 shadow-xl backdrop-blur"
+          className="absolute right-0 top-full z-50 mt-2 w-64 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-black/10 bg-paper/95 p-3 shadow-xl backdrop-blur"
         >
           <ul className="space-y-1">
             {links.map((item) => (

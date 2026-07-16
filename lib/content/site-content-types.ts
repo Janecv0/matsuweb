@@ -8,7 +8,12 @@ export interface Cta {
 export interface ValueCard {
   key: string;
   title: string;
+  /** Short line shown on the card by default. */
   text: string;
+  /** Extra line revealed on hover (desktop). */
+  hover: string;
+  /** Longer copy shown in the modal on click — one entry per paragraph. */
+  modalBody: string[];
   /** The final card is a sage-coloured call to action linking to Start Here. */
   cta?: boolean;
 }

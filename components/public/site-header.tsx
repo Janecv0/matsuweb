@@ -27,8 +27,8 @@ export async function SiteHeader({ locale, slug, activeKey }: SiteHeaderProps) {
         </div>
       )}
 
-      <div className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-black/[0.06] bg-paper/90 px-6 py-4 backdrop-blur-md sm:px-8 lg:px-12">
-        <MatsuLogo href={`/${locale}`} />
+      <div className="sticky top-0 z-40 flex items-center justify-between gap-2 border-b border-black/[0.06] bg-paper/90 px-4 py-4 backdrop-blur-md sm:gap-4 sm:px-8 lg:px-12">
+        <MatsuLogo href={`/${locale}`} compact />
 
         <nav className="hidden items-center gap-1.5 lg:flex" aria-label="Primary">
           {links.map((item) => {
@@ -49,17 +49,17 @@ export async function SiteHeader({ locale, slug, activeKey }: SiteHeaderProps) {
           })}
         </nav>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
           <LanguageSwitcher currentLocale={locale} slug={slug} />
           <Link
             href="/members"
-            className="focus-ring hidden rounded-full border-[1.5px] border-sage px-4 py-2.5 text-sm font-bold text-sage transition hover:bg-sage hover:text-white sm:inline-flex"
+            className="focus-ring hidden rounded-full border-[1.5px] border-sage px-4 py-2.5 text-sm font-bold text-sage transition hover:bg-sage hover:text-white lg:inline-flex"
           >
             {c.nav.members}
           </Link>
           <Link
             href={startHref}
-            className="focus-ring hidden rounded-full bg-sage px-5 py-3 text-sm font-bold text-white transition hover:bg-sage/90 sm:inline-flex"
+            className="focus-ring hidden rounded-full bg-sage px-5 py-3 text-sm font-bold text-white transition hover:bg-sage/90 lg:inline-flex"
           >
             {c.nav.enrollCta}
           </Link>
