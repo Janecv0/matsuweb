@@ -39,8 +39,8 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="surface mx-auto w-full max-w-md space-y-4 p-7">
-      <h1 className="text-3xl">Admin Login</h1>
-      <p className="text-sm text-muted">Sign in with Supabase Auth credentials.</p>
+      <h1 className="text-3xl">Přihlášení / Sign in</h1>
+      <p className="text-sm text-muted">Členská sekce Karate Klubu Matsu.</p>
 
       <label className="block space-y-1 text-sm">
         <span className="font-semibold">Email</span>

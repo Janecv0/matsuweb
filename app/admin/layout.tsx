@@ -37,9 +37,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <Link href="/admin/submissions" className="focus-ring rounded-md px-3 py-1.5 text-sm hover:bg-black/5">
               Submissions
             </Link>
-            <Link href="/admin/media" className="focus-ring rounded-md px-3 py-1.5 text-sm hover:bg-black/5">
-              Media
-            </Link>
             <form action={signOutAction}>
               <button type="submit" className="focus-ring rounded-md bg-ink px-3 py-1.5 text-sm font-semibold text-paper">
                 Sign out

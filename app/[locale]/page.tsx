@@ -1,22 +1,19 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CoachesPreview } from "@/components/public/coaches-preview";
-import { EventsSection } from "@/components/public/events-section";
-import { HeroCarousel } from "@/components/public/hero-carousel";
-import { LocationSection } from "@/components/public/location-section";
 import { PublicShell } from "@/components/public/public-shell";
-import { TestimonialsGrid } from "@/components/public/testimonials-grid";
-import { ValueCardsGrid } from "@/components/public/value-cards-grid";
-import { getPageContentByKey, getPublicContent, getSetting } from "@/lib/content/public-content";
-import { isLocale, getPathForPage, uiDictionary } from "@/lib/i18n";
+import { PhotoSlot } from "@/components/public/photo-slot";
+import { getSiteContent } from "@/lib/content/site-content";
+import { isLocale, getPathForPage, locales } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
 }
 
-export const revalidate = 120;
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
   const { locale } = await params;
@@ -25,18 +22,14 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
     return {};
   }
 
-  const content = await getPublicContent(locale);
-  const page = getPageContentByKey(content, "home");
+  const c = getSiteContent(locale);
 
   return {
-    title: page?.seo_title ?? "Karate Klub Matsu",
-    description: page?.seo_description ?? "Karate Klub Matsu",
+    title: "Karate Klub Matsu",
+    description: c.hero.subtitle,
     alternates: {
       canonical: `/${locale}`,
-      languages: {
-        cs: "/cs",
-        en: "/en"
-      }
+      languages: { cs: "/cs", en: "/en" }
     }
   };
 }
@@ -48,71 +41,118 @@ export default async function HomePage({ params }: HomePageProps) {
     notFound();
   }
 
-  const content = await getPublicContent(locale);
-  const home = getPageContentByKey(content, "home");
-  const about = getPageContentByKey(content, "about");
-  const calendarUrl = getSetting(content, "google_calendar_embed_url").trim();
+  const c = getSiteContent(locale);
 
   return (
-    <PublicShell locale={locale} content={content}>
-      <HeroCarousel slides={content.heroSlides} />
-      <ValueCardsGrid cards={content.valueCards} />
-
-      <section className="section-shell mt-20 grid gap-6 lg:grid-cols-[1.1fr,0.9fr]">
-        <div className="surface p-7">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ember">{about?.subtitle ?? "About"}</p>
-          <h2 className="mt-2 text-3xl sm:text-4xl">{about?.title}</h2>
-          <p className="mt-4 text-base leading-7 text-muted">{about?.intro}</p>
-          <Link
-            href={getPathForPage(locale, "about")}
-            className="focus-ring mt-6 inline-flex rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-paper"
-          >
-            {locale === "cs" ? "Více o klubu" : "More about the club"}
-          </Link>
+    <PublicShell locale={locale}>
+      {/* Hero */}
+      <section className="grid items-center gap-9 px-6 pb-14 pt-10 sm:px-12 lg:grid-cols-2">
+        <div>
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full bg-warm px-3.5 py-2 text-xs font-semibold text-bronze">
+            {c.hero.badge}
+          </span>
+          <h1 className="font-display text-4xl font-bold leading-[1.1] text-ink sm:text-5xl">
+            {c.hero.title}
+          </h1>
+          <p className="mt-5 max-w-[460px] text-[17px] leading-7 text-muted">{c.hero.subtitle}</p>
+          <div className="mt-7 flex flex-wrap gap-3.5">
+            <Link
+              href={getPathForPage(locale, c.hero.primaryCta.target)}
+              className="focus-ring rounded-full bg-ember px-7 py-3.5 text-sm font-bold text-white transition hover:bg-ember/90"
+            >
+              {c.hero.primaryCta.label}
+            </Link>
+            <Link
+              href={getPathForPage(locale, c.hero.secondaryCta.target)}
+              className="focus-ring rounded-full border border-ember/40 px-7 py-3.5 text-sm font-bold text-ember transition hover:bg-ember/5"
+            >
+              {c.hero.secondaryCta.label}
+            </Link>
+          </div>
         </div>
+        <PhotoSlot note={c.hero.photoNote} className="h-[320px] sm:h-[380px]" />
+      </section>
 
-        <div className="relative min-h-[320px] overflow-hidden rounded-2xl border border-black/10">
-          <Image
-            src={
-              content.heroSlides[0]?.image_url ??
-              "https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1400&q=80"
-            }
-            alt={locale === "cs" ? "Trénink v dojo" : "Training in dojo"}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 45vw"
-          />
+      {/* Value cards */}
+      <section className="px-6 pb-16 sm:px-12">
+        <h2 className="text-center font-display text-3xl font-bold text-ink">{c.values.title}</h2>
+        <p className="mt-2 text-center text-[15px] text-muted">{c.values.subtitle}</p>
+        <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {c.values.cards.map((card) => {
+            const Wrapper = card.cta ? Link : "div";
+            const wrapperProps = card.cta
+              ? { href: getPathForPage(locale, "start-here") }
+              : {};
+            return (
+              <Wrapper
+                key={card.key}
+                {...(wrapperProps as { href: string })}
+                className={cn(
+                  "block overflow-hidden rounded-3xl shadow-card",
+                  card.cta ? "bg-sage text-white" : "bg-white"
+                )}
+              >
+                <div
+                  className={cn(
+                    "h-40",
+                    card.cta ? "bg-white/10" : "stripe bg-warm/40"
+                  )}
+                />
+                <div className="p-6">
+                  <h3
+                    className={cn(
+                      "font-display text-xl font-bold",
+                      card.cta ? "text-white" : "text-ember"
+                    )}
+                  >
+                    {card.title}
+                  </h3>
+                  <p
+                    className={cn(
+                      "mt-1.5 text-[13px] leading-6",
+                      card.cta ? "text-white/85" : "text-muted"
+                    )}
+                  >
+                    {card.text}
+                  </p>
+                </div>
+              </Wrapper>
+            );
+          })}
         </div>
       </section>
 
-      <CoachesPreview locale={locale} coaches={content.coaches} title={uiDictionary[locale].coachesTitle} />
-      <TestimonialsGrid title={uiDictionary[locale].testimonialsTitle} testimonials={content.testimonials} />
-      <LocationSection locale={locale} locations={content.locations} />
-      <EventsSection locale={locale} events={content.events} calendarEmbedUrl={calendarUrl} />
-
-      <section className="section-shell mt-20">
-        <div className="surface bg-ink p-8 text-paper sm:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-paper/70">{home?.subtitle}</p>
-          <h2 className="mt-2 text-3xl sm:text-4xl">
-            {locale === "cs"
-              ? "Začněte trénovat s Karate Klubem Matsu"
-              : "Start training with Karate Klub Matsu"}
+      {/* Family band */}
+      <section className="mx-6 mb-10 grid items-center gap-9 rounded-[32px] bg-warm p-8 sm:mx-12 sm:p-10 lg:grid-cols-2">
+        <PhotoSlot className="h-[260px]" rounded="rounded-2xl" />
+        <div>
+          <h2 className="font-display text-2xl font-bold leading-[1.25] text-ink sm:text-3xl">
+            {c.familyBand.title}
           </h2>
-          <p className="mt-4 max-w-3xl text-paper/80">{home?.intro}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              href={getPathForPage(locale, "start-here")}
-              className="focus-ring rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-white"
-            >
-              {uiDictionary[locale].beginnerCta}
-            </Link>
-            <Link
-              href={getPathForPage(locale, "contact")}
-              className="focus-ring rounded-full border border-paper/30 px-5 py-2.5 text-sm font-semibold"
-            >
-              {uiDictionary[locale].contactUs}
-            </Link>
-          </div>
+          <p className="mt-3.5 text-base leading-7 text-muted">{c.familyBand.body}</p>
+          <Link
+            href={getPathForPage(locale, "about")}
+            className="focus-ring mt-5 inline-flex rounded-full bg-ink px-6 py-3 text-[13px] font-bold text-paper transition hover:bg-ink/90"
+          >
+            {c.familyBand.ctaLabel}
+          </Link>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="px-6 pb-16 sm:px-12">
+        <h2 className="mb-5 font-display text-2xl font-bold text-ink">{c.testimonials.title}</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {c.testimonials.items.map((item) => (
+            <figure key={item.author} className="rounded-3xl bg-white p-6 shadow-card">
+              <blockquote className="font-display text-base leading-7 text-ink">
+                {item.quote}
+              </blockquote>
+              <figcaption className="mt-3 text-[13px] font-semibold text-bronze">
+                {item.author}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </section>
     </PublicShell>

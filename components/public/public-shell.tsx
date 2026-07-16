@@ -1,39 +1,22 @@
-import { getSetting } from "@/lib/content/public-content";
-import { Locale, PublicContentBundle } from "@/lib/types";
+import { Locale, PageKey } from "@/lib/types";
+import { resolvePageKey } from "@/lib/i18n";
 import { SiteFooter } from "@/components/public/site-footer";
 import { SiteHeader } from "@/components/public/site-header";
 
 interface PublicShellProps {
   locale: Locale;
   slug?: string[];
-  content: PublicContentBundle;
   children: React.ReactNode;
 }
 
-export function PublicShell({ locale, slug, content, children }: PublicShellProps) {
-  const logoUrl = getSetting(content, "logo_url");
-  const logoAlt = getSetting(content, "logo_alt") || "Karate Klub Matsu";
-  const contactText = getSetting(content, "footer_contact");
+export function PublicShell({ locale, slug, children }: PublicShellProps) {
+  const activeKey: PageKey = slug ? resolvePageKey(locale, slug) ?? "home" : "home";
 
   return (
-    <div className="min-h-screen bg-paper">
-      <SiteHeader
-        locale={locale}
-        slug={slug}
-        navigation={content.navigation}
-        announcements={content.announcements}
-        logoUrl={logoUrl}
-        logoAlt={logoAlt}
-      />
+    <div className="mx-auto min-h-screen max-w-[1400px] bg-paper shadow-[0_0_60px_rgba(0,0,0,0.06)]">
+      <SiteHeader locale={locale} slug={slug} activeKey={activeKey} />
       <main>{children}</main>
-      <SiteFooter
-        locale={locale}
-        logoUrl={logoUrl}
-        logoAlt={logoAlt}
-        contactText={contactText}
-        links={content.footerLinks}
-        socialLinks={content.socialLinks}
-      />
+      <SiteFooter locale={locale} />
     </div>
   );
 }

@@ -3,20 +3,29 @@
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { NavigationItem } from "@/lib/types";
+import type { NavLink } from "@/lib/nav";
 
 interface MobileMenuProps {
-  items: NavigationItem[];
+  links: NavLink[];
+  membersLabel: string;
+  membersHref: string;
+  ctaLabel: string;
+  ctaHref: string;
   menuLabel: string;
 }
 
-export function MobileMenu({ items, menuLabel }: MobileMenuProps) {
+export function MobileMenu({
+  links,
+  membersLabel,
+  membersHref,
+  ctaLabel,
+  ctaHref,
+  menuLabel
+}: MobileMenuProps) {
   const [open, setOpen] = useState(false);
-  const mainItems = items.filter((item) => !item.is_cta);
-  const cta = items.find((item) => item.is_cta);
 
   return (
-    <div className="lg:hidden">
+    <div className="relative lg:hidden">
       <button
         type="button"
         aria-expanded={open}
@@ -31,14 +40,14 @@ export function MobileMenu({ items, menuLabel }: MobileMenuProps) {
       {open ? (
         <div
           id="mobile-navigation"
-          className="absolute left-0 top-full z-50 mt-2 w-full border-y border-black/15 bg-paper/95 px-4 py-4 shadow-lg backdrop-blur"
+          className="absolute right-0 top-full z-50 mt-2 w-60 rounded-2xl border border-black/10 bg-paper/95 p-3 shadow-xl backdrop-blur"
         >
-          <ul className="space-y-2">
-            {mainItems.map((item) => (
-              <li key={item.id}>
+          <ul className="space-y-1">
+            {links.map((item) => (
+              <li key={item.key}>
                 <Link
                   href={item.href}
-                  className="focus-ring block rounded-md px-3 py-2 text-base font-medium text-ink hover:bg-black/5"
+                  className="focus-ring block rounded-xl px-3 py-2 text-base font-semibold text-ink hover:bg-warm/60"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}
@@ -46,15 +55,20 @@ export function MobileMenu({ items, menuLabel }: MobileMenuProps) {
               </li>
             ))}
           </ul>
-          {cta ? (
-            <Link
-              href={cta.href}
-              className="focus-ring mt-3 block rounded-md bg-ember px-3 py-2 text-center text-sm font-semibold text-white hover:bg-ember/90"
-              onClick={() => setOpen(false)}
-            >
-              {cta.label}
-            </Link>
-          ) : null}
+          <Link
+            href={membersHref}
+            className="focus-ring mt-2 block rounded-xl border-[1.5px] border-sage px-3 py-2 text-center text-sm font-bold text-sage"
+            onClick={() => setOpen(false)}
+          >
+            {membersLabel}
+          </Link>
+          <Link
+            href={ctaHref}
+            className="focus-ring mt-2 block rounded-xl bg-sage px-3 py-2 text-center text-sm font-bold text-white"
+            onClick={() => setOpen(false)}
+          >
+            {ctaLabel}
+          </Link>
         </div>
       ) : null}
     </div>

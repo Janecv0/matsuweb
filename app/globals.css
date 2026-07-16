@@ -3,18 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --color-ink: #111111;
-  --color-paper: #f4f0eb;
-  --color-warm: #e8dfd3;
-  --color-ember: #d5791c;
-  --color-bronze: #8c5a24;
-  --color-muted: #5f5a54;
-  --font-noto-serif: "Noto Serif", "Times New Roman", serif;
-  --font-source-sans: "Source Sans 3", "Segoe UI", "Trebuchet MS", sans-serif;
+  --color-ink: #2b2420;
+  --color-paper: #faf3e8;
+  --color-warm: #f1e3d1;
+  --color-ember: #c2703f;
+  --color-sage: #6b7a5e;
+  --color-bronze: #8a5a2e;
+  --color-muted: #5c5147;
 }
 
 * {
-  border-color: rgb(0 0 0 / 0.08);
+  border-color: rgb(43 36 32 / 0.08);
 }
 
 html,
@@ -28,8 +27,6 @@ body {
   font-family: var(--font-source-sans), sans-serif;
   color: var(--color-ink);
   background: var(--color-paper);
-  background-image: radial-gradient(circle at 5% 10%, rgb(255 255 255 / 0.9), transparent 30%),
-    radial-gradient(circle at 95% 0%, rgb(220 186 150 / 0.22), transparent 28%);
 }
 
 h1,
@@ -61,7 +58,17 @@ img {
 }
 
 .surface {
-  @apply rounded-2xl border border-black/10 bg-white/85 shadow-card backdrop-blur;
+  @apply rounded-3xl border border-black/5 bg-white shadow-card;
+}
+
+.stripe {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(43 36 32 / 0.06) 0px,
+    rgb(43 36 32 / 0.06) 2px,
+    transparent 2px,
+    transparent 14px
+  );
 }
 
 .prose-content p {

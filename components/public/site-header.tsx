@@ -1,68 +1,76 @@
 import Link from "next/link";
-import { Announcement, Locale, NavigationItem } from "@/lib/types";
-import { uiDictionary } from "@/lib/i18n";
-import { AnnouncementStrip } from "@/components/public/announcement-strip";
+import { Locale, PageKey } from "@/lib/types";
+import { getPathForPage } from "@/lib/i18n";
+import { getEditableContent } from "@/lib/content/editable";
+import { getNavLinks } from "@/lib/nav";
+import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "@/components/public/language-switcher";
+import { MatsuLogo } from "@/components/public/matsu-logo";
 import { MobileMenu } from "@/components/public/mobile-menu";
-import { SiteLogo } from "@/components/public/site-logo";
 
 interface SiteHeaderProps {
   locale: Locale;
   slug?: string[];
-  navigation: NavigationItem[];
-  announcements: Announcement[];
-  logoUrl: string;
-  logoAlt: string;
+  activeKey: PageKey;
 }
 
-export function SiteHeader({
-  locale,
-  slug,
-  navigation,
-  announcements,
-  logoUrl,
-  logoAlt
-}: SiteHeaderProps) {
-  const mainItems = navigation.filter((item) => !item.is_cta).sort((a, b) => a.order_index - b.order_index);
-  const cta = navigation.find((item) => item.is_cta);
-  const recruitment = announcements.find((item) => item.strip_type === "recruitment");
-  const infoStrip = announcements.find((item) => item.strip_type === "info");
+export async function SiteHeader({ locale, slug, activeKey }: SiteHeaderProps) {
+  const c = await getEditableContent(locale);
+  const links = getNavLinks(locale);
+  const startHref = getPathForPage(locale, "start-here");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-black/10 bg-paper/90 backdrop-blur-md">
-      {recruitment ? <AnnouncementStrip announcement={recruitment} /> : null}
-      {infoStrip ? <AnnouncementStrip announcement={infoStrip} /> : null}
+    <header>
+      {c.announcementVisible === false ? null : (
+        <div className="bg-ember py-2.5 text-center text-xs font-semibold tracking-wide text-white">
+          {c.announcement}
+        </div>
+      )}
 
-      <div className="section-shell relative flex min-h-16 items-center justify-between gap-4 py-3">
-        <SiteLogo href={`/${locale}`} logoUrl={logoUrl} altText={logoAlt} />
+      <div className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4 border-b border-black/[0.06] bg-paper/90 px-6 py-4 backdrop-blur-md sm:px-8 lg:px-12">
+        <MatsuLogo href={`/${locale}`} />
 
-        <nav className="hidden items-center gap-2 lg:flex" aria-label="Primary">
-          {mainItems.map((item) => (
-            <Link
-              key={item.id}
-              href={item.href}
-              className="focus-ring rounded-md px-3 py-2 text-sm font-semibold text-ink/90 transition hover:bg-black/5"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-1.5 lg:flex" aria-label="Primary">
+          {links.map((item) => {
+            const active = item.key === activeKey;
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "focus-ring rounded-full px-4 py-2.5 text-sm font-semibold transition",
+                  active ? "bg-warm text-ink" : "text-ink hover:bg-warm/60"
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="flex items-center gap-2.5">
           <LanguageSwitcher currentLocale={locale} slug={slug} />
-          {cta ? (
-            <Link
-              href={cta.href}
-              className="focus-ring rounded-full bg-ember px-4 py-2 text-sm font-semibold text-white transition hover:bg-ember/90"
-            >
-              {cta.label}
-            </Link>
-          ) : null}
-        </div>
-
-        <div className="flex items-center gap-3 lg:hidden">
-          <LanguageSwitcher currentLocale={locale} slug={slug} />
-          <MobileMenu items={navigation} menuLabel={uiDictionary[locale].mobileMenu} />
+          <Link
+            href="/members"
+            className="focus-ring hidden rounded-full border-[1.5px] border-sage px-4 py-2.5 text-sm font-bold text-sage transition hover:bg-sage hover:text-white sm:inline-flex"
+          >
+            {c.nav.members}
+          </Link>
+          <Link
+            href={startHref}
+            className="focus-ring hidden rounded-full bg-sage px-5 py-3 text-sm font-bold text-white transition hover:bg-sage/90 sm:inline-flex"
+          >
+            {c.nav.enrollCta}
+          </Link>
+          <MobileMenu
+            links={links}
+            membersLabel={c.nav.members}
+            membersHref="/members"
+            ctaLabel={c.nav.enrollCta}
+            ctaHref={startHref}
+            menuLabel="Menu"
+          />
         </div>
       </div>
     </header>

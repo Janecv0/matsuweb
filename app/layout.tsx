@@ -1,5 +1,18 @@
 import type { Metadata } from "next";
+import { Noto_Serif, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
+
+const notoSerif = Noto_Serif({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-noto-serif"
+});
+
+const sourceSans = Source_Sans_3({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-source-sans"
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://karate-klub-matsu.vercel.app"),
@@ -20,10 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="cs" suppressHydrationWarning>
-      <body className="antialiased">
-        {children}
-      </body>
+    <html lang="cs" suppressHydrationWarning className={`${notoSerif.variable} ${sourceSans.variable}`}>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

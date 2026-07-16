@@ -1,41 +1,33 @@
 import Link from "next/link";
-import { FooterLink, Locale, SocialLink } from "@/lib/types";
-import { SiteLogo } from "@/components/public/site-logo";
+import { Locale } from "@/lib/types";
+import { getSiteContent } from "@/lib/content/site-content";
+import { getNavLinks } from "@/lib/nav";
+import { MatsuLogo } from "@/components/public/matsu-logo";
 
 interface SiteFooterProps {
   locale: Locale;
-  logoUrl: string;
-  logoAlt: string;
-  contactText: string;
-  links: FooterLink[];
-  socialLinks: SocialLink[];
 }
 
-export function SiteFooter({
-  locale,
-  logoUrl,
-  logoAlt,
-  contactText,
-  links,
-  socialLinks
-}: SiteFooterProps) {
+export function SiteFooter({ locale }: SiteFooterProps) {
   const year = new Date().getFullYear();
-  const navLabel = locale === "cs" ? "Navigace" : "Navigation";
-  const socialLabel = locale === "cs" ? "Sítě" : "Social";
+  const c = getSiteContent(locale);
+  const links = getNavLinks(locale).filter((item) => item.key !== "home");
 
   return (
-    <footer className="mt-20 border-t border-black/15 bg-ink text-paper">
-      <div className="section-shell grid gap-10 py-14 md:grid-cols-[1.2fr,1fr,1fr]">
-        <div className="space-y-4">
-          <SiteLogo href={`/${locale}`} logoUrl={logoUrl} altText={logoAlt} />
-          <p className="max-w-sm text-sm text-paper/75">{contactText}</p>
+    <footer className="mt-4 rounded-t-[22px] bg-ink px-6 py-12 text-paper sm:px-12">
+      <div className="grid gap-10 md:grid-cols-[1.4fr,1fr,1fr]">
+        <div className="space-y-3">
+          <MatsuLogo href={`/${locale}`} variant="dark" />
+          <p className="max-w-sm text-sm leading-6 text-paper/70">{c.footer.tagline}</p>
         </div>
 
         <div>
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-paper/70">{navLabel}</h2>
+          <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-paper/50">
+            {c.footer.navLabel}
+          </h2>
           <ul className="space-y-2 text-sm text-paper/85">
             {links.map((item) => (
-              <li key={item.id}>
+              <li key={item.key}>
                 <Link href={item.href} className="focus-ring rounded-sm hover:text-white">
                   {item.label}
                 </Link>
@@ -45,12 +37,19 @@ export function SiteFooter({
         </div>
 
         <div>
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-paper/70">{socialLabel}</h2>
+          <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-paper/50">
+            {c.footer.socialLabel}
+          </h2>
           <ul className="space-y-2 text-sm text-paper/85">
-            {socialLinks.map((item) => (
-              <li key={item.id}>
-                <Link href={item.href} target="_blank" rel="noreferrer" className="focus-ring rounded-sm hover:text-white">
-                  {item.platform}
+            {c.footer.socials.map((item) => (
+              <li key={item.label}>
+                <Link
+                  href={item.href ?? "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="focus-ring rounded-sm hover:text-white"
+                >
+                  {item.label}
                 </Link>
               </li>
             ))}
@@ -58,8 +57,8 @@ export function SiteFooter({
         </div>
       </div>
 
-      <div className="border-t border-white/15 py-4">
-        <div className="section-shell text-xs text-paper/70">© {year} Karate Klub Matsu</div>
+      <div className="mt-8 border-t border-white/10 pt-4 text-xs text-paper/50">
+        © {year} Karate Klub Matsu
       </div>
     </footer>
   );

@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { PageRenderer } from "@/components/public/page-renderer";
 import { PublicShell } from "@/components/public/public-shell";
-import { getPageContentByKey, getPublicContent } from "@/lib/content/public-content";
-import { getAllRouteParams, getPathForPage, isLocale, resolvePageKey } from "@/lib/i18n";
+import { getEditableContent } from "@/lib/content/editable";
+import {
+  getAllRouteParams,
+  getPageTitle,
+  getPathForPage,
+  isLocale,
+  resolvePageKey
+} from "@/lib/i18n";
 
 interface DynamicPageProps {
   params: Promise<{ locale: string; slug: string[] }>;
 }
-
-export const revalidate = 120;
 
 export function generateStaticParams() {
   return getAllRouteParams()
@@ -29,12 +33,8 @@ export async function generateMetadata({ params }: DynamicPageProps): Promise<Me
     return {};
   }
 
-  const content = await getPublicContent(locale);
-  const page = getPageContentByKey(content, pageKey);
-
   return {
-    title: page?.seo_title ?? page?.title,
-    description: page?.seo_description ?? page?.intro ?? undefined
+    title: `${getPageTitle(locale, pageKey)} | Karate Klub Matsu`
   };
 }
 
@@ -50,20 +50,26 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
     notFound();
   }
 
-  const aboutRedirectSection: Partial<Record<string, string>> = {
-    "about-club": "club",
-    "about-history": "history",
-    "about-coaches": "trainers"
+  // Legacy deep pages now live as anchored sections on the About / Students pages.
+  const anchorRedirects: Partial<Record<string, { parent: "about" | "students"; anchor: string }>> = {
+    "about-club": { parent: "about", anchor: "club" },
+    "about-history": { parent: "about", anchor: "history" },
+    "about-coaches": { parent: "about", anchor: "trainers" },
+    "students-examination-rules": { parent: "students", anchor: "exam-rules" },
+    "students-vocabulary": { parent: "students", anchor: "glossary" },
+    "students-etiquette": { parent: "students", anchor: "etiquette" },
+    "students-ethics": { parent: "students", anchor: "ethics" }
   };
 
-  if (aboutRedirectSection[pageKey]) {
-    redirect(`${getPathForPage(locale, "about")}#${aboutRedirectSection[pageKey]}`);
+  const target = anchorRedirects[pageKey];
+  if (target) {
+    redirect(`${getPathForPage(locale, target.parent)}#${target.anchor}`);
   }
 
-  const content = await getPublicContent(locale);
+  const content = await getEditableContent(locale);
 
   return (
-    <PublicShell locale={locale} slug={slug} content={content}>
+    <PublicShell locale={locale} slug={slug}>
       <PageRenderer locale={locale} pageKey={pageKey} content={content} />
     </PublicShell>
   );
